@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="row my_pro_row_class">
+    <div style="margin-left: 20px;">
+        <p><a href="{% url 'user:your_movies' %}">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a></p>
+    </div>
+</div>
+
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card-body">
+                <div class="row">
+
+                    <div class="col-md-9">
+
+                        <form enctype="multipart/form-data" method="post">
+                            {% csrf_token %}
+                            <table class="table table-borderless">
+                                <tbody>
+<!--                                    {% if error %}-->
+<!--                                        <tr>-->
+<!--                                            <td colspan="2">-->
+<!--                                                <div class="alert alert-danger">-->
+<!--                                                    {{ error }}-->
+<!--                                                </div>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                    {% endif %}-->
+
+                                        {% if errors %}
+                                            <tr>
+                                                <td colspan="2">
+                                                    <div class="alert alert-danger" style="color:red;">
+                                                        {{ errors }}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+
+                                    <tr>
+                                        <th><label>Movie Title</label></th>
+                                        <td><input type="text" name="title" value="{{title}}"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <th><label>Description</label></th>
+                                        <td><textarea name="desc" class="description-box">{{description}}</textarea></td>
+
+                                    </tr>
+                                    <tr>
+                                        <th><label>Release Date</label></th>
+                                        <td><input type="date" name="date" value="{{date}}"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <th><label>Actors</label></th>
+                                        <td><input type="text" name="actors" value="{{actors}}"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <th><label>Youtube Link</label></th>
+                                        <td><input type="url" name="link" value="{{link}}"></td>
+
+                                    </tr>
+
+
+                                        <tr>
+                                            <th><label>Genre</label></th>
+                                            <td>
+                                                <select id="genre" class="genre" name="category" required>
+                                                    <option {% if category == 'Action' %} selected {% endif %}>Action</option>
+                                                    <option {% if category == 'Sci-fi' %} selected {% endif %}>Sci-fi</option>
+                                                    <option {% if category == 'Comedy' %} selected {% endif %}>Comedy</option>
+                                                    <option {% if category == 'Romance' %} selected {% endif %}>Romance</option>
+                                                    <option {% if category == 'Drama' %} selected {% endif %}>Drama</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+
+
+<tr>
+    <th><label>Image</label></th>
+    <td>
+        <input type="file" name="image">
+        {% if errors.image %}
+            <div class="alert alert-danger" style="color:red;">
+                {{ errors.image }}
+            </div>
+        {% endif %}
+    </td>
+</tr>
+                                    <tr>
+                                        <th>
+                                            <input type="submit" value="Upload" class="btn btn-dark">
+                                        </th>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

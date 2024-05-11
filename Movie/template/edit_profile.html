@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+
+
+</head>
+<body>
+
+
+<div class="row my_pro_row_class">
+    <div style="margin-left: 20px;">
+        <p><a href="{% url 'user:your_movies' %}">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a></p>
+    </div>
+</div>
+
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <form method="post" action="">
+                {% csrf_token %}
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="text-center"><i class="fas fa-user-circle"></i> User Profile</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 text-center">
+                            <img src="{% static 'images/user_icon.png' %}" alt="" class="img-fluid rounded-circle profile-img">
+                        </div>
+                        <div class="col-md-9">
+
+                           <table class="table table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <th style="width: 30%;">Username:</th>
+                                        <td><input type="text" style="width: 70%; border: none; border-bottom: 1px solid #ccc;"  value="{{ user.username }}" name="username"></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width: 30%;">First Name:</th>
+                                        <td><input type="text" style="width: 70%; border: none; border-bottom: 1px solid #ccc;" value="{{ user.first_name }}" name="firstname"></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width: 30%;">Last Name:</th>
+                                        <td><input type="text" style="width: 70%; border: none; border-bottom: 1px solid #ccc;" value="{{ user.last_name }}" name="lastname"></td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width: 30%;">Email:</th>
+                                        <td><input type="email" style="width: 70%; border: none; border-bottom: 1px solid #ccc;" value="{{ user.email }}" name="email"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer text-muted text-center">
+                    <button type="submit" class="btn btn-dark" >Submit</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
+{% endblock %}

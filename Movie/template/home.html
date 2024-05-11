@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{%if category %}
+<div>
+  <div class="row my_pro_row_class">
+    <div class="mx-auto">
+    <p><a href="{% url 'user:home' %}">Home</a>  >>  <a href="{% url 'user:all_movies' c_slug=category.slug %}">{{category.name}}</a></p>
+    </div>
+  </div><br>
+    <div>
+        <h1 class="text-center my_title">{{category.name}} MOVIES<hr class="underline"></h1>
+    </div>
+{% else %}
+
+
+
+<div>
+    <div class="fade-container">
+        <img class="my_image my_image_padding" src="{% static 'images/movie banner 3.jpg' %}">
+    </div>
+</div>
+
+
+<div class="text-justify my-paragraph">
+    <p>In the world of endless movie choices, this website for sharing, discovering, and discussing the latest movie. This movie posting website allows users
+        to contribute by adding new movies, sharing thoughts through comments, and building a personalized list of favorites.
+        We try our best to provide a satisfactory customer-experience, and valuable feedback given by visitors motivates us to keep moving forward.
+        We offer full transparency to our visitors, as we don’t want them to be worried about any hidden charges. Also, we don’t trick visitors into paying us, and you can rely on us as far as the quality of services is concerned.</p>
+</div>
+
+</div>
+    {% endif %}
+
+
+
+
+<div class="container">
+    <div class="row my_row_class">
+        {% for i in movies %}
+            <div class="my_bottom_margin col-9 col-sm-12 col-md-4 col-md-12 col-lg-4 ">
+                <div class="card text-center" style="width:20em;">
+                    <a href="{% url 'user:home_movie_detail' c_slug=i.categories.slug m_slug=i.slug  %}"><img class="card-img-top my_img_pro " src="{{ i.image.url }}" alt="{{ movies_image }}"></a>
+                    <div>
+                        <h4 class="card_body">{{ i.title }}</h4>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="mx_auto">
+        {% if movies.paginator.num_pages > 1 %}
+
+            <div class="text-center">
+
+                {% for pg in movies.paginator.page_range %}
+                    <a href="?page={{ pg }}" class="btn btn-light btn-sm {% if movies.number == pg %} active {% endif %}">{{ pg }}</a>
+
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    <br>
+</div>
+
+{% endblock %}

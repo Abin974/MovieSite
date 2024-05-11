@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="text-center"><i class="fas fa-user-circle"></i> Profile</h3>
+                </div>
+                <div class="card-body">
+                    {% if error_message %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error_message }}
+                    </div>
+                    {% else %}
+                    <div class="row">
+                        <div class="col-md-9 offset-md-4">
+                           <table class="table table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <th style="width: 30%;">Username:</th>
+                                        <td style="width: 70%;">{{ user.username }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width: 30%;">First Name:</th>
+                                        <td style="width: 70%;">{{ user.first_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width: 30%;">Last Name:</th>
+                                        <td style="width: 70%;">{{ user.last_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width: 30%;">Email:</th>
+                                        <td style="width: 70%;">{{ user.email }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+
+                {% if not error_message %}
+                <div class="card-footer text-muted text-center">
+                    <a href="{% url 'user:edit_profile' %}" class="btn btn-dark">
+                        <i class="fa-regular fa-pen-to-square"></i> Edit Profile
+                    </a>
+                </div>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="">
+    <div class="row">
+        <div class="col-12">
+            {% include 'your_movies.html' %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

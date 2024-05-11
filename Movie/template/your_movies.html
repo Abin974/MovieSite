@@ -1,0 +1,41 @@
+
+<nav class="navbar navbar-light bg-light d-flex justify-content-between">
+    <a class="btn btn-dark" href="{% url 'user:add_movies' %}">Add Movies<ul><i class="fa-solid fa-plus"></i></ul></a>
+
+</nav>
+<div class="row">
+    <div class="col-12 offset-md">
+    <h1 class="my_title text-center flex-grow-1">Your movies<hr class="underline"></h1>
+
+    </div>
+</div>
+
+<div class="container">
+    <div class="row my_row_class">
+        {% for i in movies %}
+            <div class="my_bottom_margin col-9 col-sm-12 col-md-4 col-md-12 col-lg-4 ">
+                <div class="card text-center" style="width:20em;">
+                    <a href="{% url 'user:movie_detail' c_slug=i.categories.slug m_slug=i.slug  %}"><img class="card-img-top my_img_pro " src="{{ i.image.url }}" alt="{{ movies_image }}"></a>
+                    <div>
+                        <h4 class="card_body">{{ i.title }}</h4>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="mx_auto">
+        {% if movies.paginator.num_pages > 1 %}
+
+            <div class="text-center">
+
+                {% for pg in movies.paginator.page_range %}
+                    <a href="?page={{ pg }}" class="btn btn-light btn-sm {% if movies.number == pg %} active {% endif %}">{{ pg }}</a>
+
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+    <br>
+</div>
+

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ movie.title }} - Movie Details
+{% endblock %}
+
+{% block content %}
+<div class="row my_pro_row_class">
+    <div class="mx_auto">
+        <p><a href="{% url 'user:home'  %}">Home</a> |  <a href="{% url 'user:all_movies' c_slug=movie.categories.slug %}">{{movie.category}}</a> |  {{movie.title}}</p>
+    </div>
+</div>
+
+<!--<div>-->
+<!--    <img class="my_image my_image_padding" src="{{movie.banners.url}}" alt="{{ movie.title }}" style="width:1530px;height:300px;">-->
+<!--</div>-->
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-2">
+            <!-- Movie image column -->
+            <img class="my_image my_image_padding" src="{{ movie.image.url }}" alt="{{ movie.title }}" style="width:80%; max-height: 200px;"><br><br>
+            <p class="card-text">&nbsp; Rating: {{ rating }} </p>
+        </div>
+
+        <div class="col-md-4">
+            <!-- Movie details column -->
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title"><b>{{ movie.title }}</b></h4>
+
+                    <p class="card-text">{{ movie.description }}</p>
+                    <p><strong>Release Date:</strong> {{ movie.release_date }}</p>
+                    <p><strong>Actors:</strong> {{ movie.actors }}</p>
+                    <p><strong>YouTube Link:</strong> <a href="{{ movie.link }}" target="_blank" style="color:blue;">Trailer</a></p>
+                    <p><strong>Added by:</strong> {{ movie.user.username }}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <!-- Review form -->
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label for="rating"><strong>Rate this movie out of 10:</strong></label>
+                <input type="number" id="rating" name="rating" min="0" max="10" step="1" required style="width: 50px;"><br><br>
+                <label><strong>Review:</strong></label><br><br>
+                <textarea name="review" class="description-box" placeholder="Write your review"></textarea><br><br>
+                {% if message %}
+                    <div class="alert alert-danger" role="alert" style="color:red;">
+                        {{ message }}
+                    </div>
+                {% endif %}
+                <input type="submit" value="Submit" class="btn btn-dark"><br><br>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!-- Review cards -->
+<div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="my_title text-center flex-grow-1">Review<hr class="underline" style="height:2px;"></h1>
+            {% for i in rr %}
+                <div class="card">
+                    <div class="card-body">
+                        {% if i.review %}
+                            <h5 class="card-title">{{ i.user }}</h5>
+                            <p class="card-text">{{ i.review }}</p>
+                            <hr class="underline">
+                        {% else %}
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="text-center">NA</h4>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="text-center">NA</h4>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
